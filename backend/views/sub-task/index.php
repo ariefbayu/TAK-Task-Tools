@@ -26,8 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'taskId',
+            // 'id',
+            // 'taskId',
+            [
+                'attribute' => 'taskId',
+                'value' => function($model){
+                    return $model->task->name;
+                }
+            ],
             'name',
             'taskOrder',
             'taskTime:datetime',

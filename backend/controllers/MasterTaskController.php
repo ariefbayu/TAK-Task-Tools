@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\MasterTask;
 use backend\models\MasterTaskSearch;
+use backend\models\SubTaskSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -107,6 +108,19 @@ class MasterTaskController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionSubtask($id)
+    {
+        $searchModel = new SubTaskSearch();
+        $searchModel->taskId = $id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('subtask', [
+            'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

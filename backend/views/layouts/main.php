@@ -5,10 +5,10 @@
 
 use backend\assets\AppAsset;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
+use yii\bootstrap4\Nav;
+use yii\bootstrap4\NavBar;
 use common\widgets\Alert;
+use yii\bootstrap4\Breadcrumbs;
 
 AppAsset::register($this);
 ?>
@@ -32,7 +32,7 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand navbar-light bg-light',
+            'class' => 'navbar navbar-expand-md navbar-light bg-light',
         ],
     ]);
     $menuItems = [
@@ -42,8 +42,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => 'Employee', 'url' => ['/employee']];
-        $menuItems[] = ['label' => 'Task', 'url' => ['/master-task']];
-        $menuItems[] = ['label' => 'Sub Task', 'url' => ['/sub-task']];
+        $menuItems[] = ['label' => 'Master Task', 'url' => ['/master-task']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

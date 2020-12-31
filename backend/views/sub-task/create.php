@@ -6,7 +6,9 @@ use yii\helpers\Html;
 /* @var $model common\models\SubTask */
 
 $this->title = 'Create Sub Task';
-$this->params['breadcrumbs'][] = ['label' => 'Sub Tasks', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Master Tasks', 'url' => ['master-task/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->task->name, 'url' => ['master-task/view', 'id' => $model->taskId]];
+$this->params['breadcrumbs'][] = ['label' => 'Sub Tasks', 'url' => ['master-task/subtask', 'id' => $model->taskId]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sub-task-create">

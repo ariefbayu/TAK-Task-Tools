@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Master Task', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,10 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            // 'id',
             'name',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            // ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {subtask} {delete}',
+                'header' => '',
+                'buttons' => [
+                    'subtask' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-list-alt" title="Sub Task"></span> ', ['master-task/subtask', 'id' => $model->id]);
+                    },
+                ]
+            ]
         ],
     ]); ?>
 

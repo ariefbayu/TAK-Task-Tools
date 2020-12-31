@@ -62,12 +62,13 @@ class SubTaskController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new SubTask();
+        $model->taskId = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['master-task/subtask', 'id' => $model->taskId]);
         }
 
         return $this->render('create', [
