@@ -2,7 +2,9 @@
 
 /* @var $this yii\web\View */
 
-use yii\bootstrap4\Html;
+use yii\bootstrap\Html;
+use yii\data\ArrayDataProvider;
+use yii\grid\GridView;
 
 $this->title = 'TAD Task Tools';
 ?>
@@ -11,23 +13,64 @@ $this->title = 'TAD Task Tools';
     <div class="body-content">
 
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <h2>Current Progress</h2>
 
-                
+                <?php
 
-                <p><?php echo Html::a('View All &raquo;', ['work-in-progress/index'], ['class' => 'btn btn-default'])?></p>
-            </div>
+                $provider = new ArrayDataProvider([
+                    'allModels' => $wip,
+                    'pagination' => [
+                        'pageSize' => 50,
+                    ],
+                    'sort' => [
+                        'attributes' => ['id', 'name'],
+                    ],
+                ]);
 
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                echo GridView::widget([
+                    'dataProvider' => $provider,
+                    'columns' => [
+                        // ['class' => 'yii\grid\SerialColumn'],
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                        // 'id',
+                        // 'taskId',
+                        [
+                            'attribute' => 'taskId',
+                            'value' => function ($model) {
+                                return $model->task->name;
+                            }
+                        ],
+                        [
+                            'attribute' => 'currentProgressId',
+                            'value' => function ($model) {
+                                return $model->currentProgress->name;
+                            }
+                        ],
+                        [
+                            'attribute' => 'employeeId',
+                            'value' => function ($model) {
+                                return $model->employee->name;
+                            }
+                        ],
+                        'taskDetail',
+                        'updatedAt',
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{detail}',
+                            'header' => '',
+                            'buttons' => [
+                                'detail' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-arrow-right" title="Update Subtask"></span> ', ['work-in-progress/view', 'id' => $model->id]);
+                                },
+                            ]
+                        ],
+                        
+                    ],
+                ]); ?>
+
+                <p><?php echo Html::a('View All &raquo;', ['work-in-progress/index'], ['class' => 'btn btn-default']) ?></p>
             </div>
         </div>
 

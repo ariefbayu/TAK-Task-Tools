@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\WorkInProgress;
 
 /**
  * Site controller
@@ -60,7 +61,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $wip = WorkInProgress::findAll(['isActive' => '1']);
+        return $this->render('index', [
+            'wip' => $wip
+        ]);
     }
 
     /**

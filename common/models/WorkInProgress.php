@@ -57,13 +57,13 @@ class WorkInProgress extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'taskId' => 'Task ID',
-            'employeeId' => 'Employee ID',
-            'currentProgressId' => 'Current Progress ID',
-            'taskDetail' => 'Task Detail',
-            'note1' => 'Note1',
-            'note2' => 'Note2',
-            'note3' => 'Note3',
+            'taskId' => 'Task',
+            'employeeId' => 'Employee',
+            'currentProgressId' => 'Progress',
+            'taskDetail' => 'Detail',
+            'note1' => 'Note 1',
+            'note2' => 'Note 2',
+            'note3' => 'Note 3',
             'isActive' => 'Is Active',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
@@ -77,7 +77,7 @@ class WorkInProgress extends \yii\db\ActiveRecord
      */
     public function getTask()
     {
-        return $this->hasOne(Mastertasks::className(), ['id' => 'taskId']);
+        return $this->hasOne(MasterTask::className(), ['id' => 'taskId']);
     }
 
     /**
@@ -87,7 +87,7 @@ class WorkInProgress extends \yii\db\ActiveRecord
      */
     public function getEmployee()
     {
-        return $this->hasOne(Employees::className(), ['id' => 'employeeId']);
+        return $this->hasOne(Employee::className(), ['id' => 'employeeId']);
     }
 
     /**
@@ -97,7 +97,7 @@ class WorkInProgress extends \yii\db\ActiveRecord
      */
     public function getCurrentProgress()
     {
-        return $this->hasOne(Subtasks::className(), ['id' => 'currentProgressId']);
+        return $this->hasOne(SubTask::className(), ['id' => 'currentProgressId']);
     }
 
     /**
