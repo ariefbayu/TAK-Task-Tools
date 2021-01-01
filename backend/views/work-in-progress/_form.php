@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
             ArrayHelper::map(SubTask::findAll(['taskId' => $model->taskId]), 'id', 'name')
         );
     } else {
-        $form->field($model, 'currentProgressId')->dropDownList(['' => '-Please Select Task-']);
+        echo $form->field($model, 'currentProgressId')->dropDownList(['' => '-Please Select Task-']);
     }
     ?>
 
