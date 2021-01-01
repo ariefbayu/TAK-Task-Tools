@@ -107,6 +107,6 @@ class WorkInProgress extends \yii\db\ActiveRecord
      */
     public function getWorkinprogressHistories()
     {
-        return $this->hasMany(WorkinprogressHistory::className(), ['wipId' => 'id']);
+        return $this->hasMany(WorkInProgressHistory::className(), ['wipId' => 'id']);
     }
 }

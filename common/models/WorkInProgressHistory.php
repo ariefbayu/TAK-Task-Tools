@@ -72,7 +72,7 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
      */
     public function getWip()
     {
-        return $this->hasOne(Workinprogress::className(), ['id' => 'wipId']);
+        return $this->hasOne(WorkInProgress::className(), ['id' => 'wipId']);
     }
 
     /**
@@ -82,7 +82,7 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
      */
     public function getTask()
     {
-        return $this->hasOne(Mastertask::className(), ['id' => 'taskId']);
+        return $this->hasOne(MasterTask::className(), ['id' => 'taskId']);
     }
 
     /**
@@ -102,7 +102,7 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
      */
     public function getCurrentWip()
     {
-        return $this->hasOne(Subtask::className(), ['id' => 'currentWipId']);
+        return $this->hasOne(SubTask::className(), ['id' => 'currentWipId']);
     }
 
     public function loadFromWIP($wip)

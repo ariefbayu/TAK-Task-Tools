@@ -61,7 +61,7 @@ class SubTask extends \yii\db\ActiveRecord
      */
     public function getTask()
     {
-        return $this->hasOne(Mastertask::className(), ['id' => 'taskId']);
+        return $this->hasOne(MasterTask::className(), ['id' => 'taskId']);
     }
 
     /**
@@ -71,7 +71,7 @@ class SubTask extends \yii\db\ActiveRecord
      */
     public function getWorkinprogresses()
     {
-        return $this->hasMany(Workinprogress::className(), ['currentProgressId' => 'id']);
+        return $this->hasMany(WorkInProgress::className(), ['currentProgressId' => 'id']);
     }
 
     /**
