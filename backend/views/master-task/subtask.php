@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = 'Sub Tasks';
       // ],
       'name',
       'taskOrder',
-      'taskTime:datetime',
+      'taskTime',
 
       [
         'class' => 'yii\grid\ActionColumn',
