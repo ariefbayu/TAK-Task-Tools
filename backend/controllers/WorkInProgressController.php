@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\WorkInProgress;
 use backend\models\WorkInProgressSearch;
+use common\models\WorkInProgressHistory;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,8 +53,10 @@ class WorkInProgressController extends Controller
      */
     public function actionView($id)
     {
+        $histories = WorkInProgressHistory::find(['wipId' => $id])->orderBy(['createdAt' => SORT_DESC])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'histories' => $histories
         ]);
     }
 
@@ -86,7 +89,13 @@ class WorkInProgressController extends Controller
     {
         $model = $this->findModel($id);
 
+        $history = new WorkInProgressHistory();
+        $history->loadFromWIP($model);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if(!$history->save()){
+                var_dump($history->errors);die();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -107,6 +116,24 @@ class WorkInProgressController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionMarkAsCompleted($id)
+    {
+        $model = $this->findModel($id);
+        $model->isActive = 0;
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $model->id]);
+    }
+
+    public function actionMarkAsActive($id)
+    {
+        $model = $this->findModel($id);
+        $model->isActive = 1;
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $model->id]);
     }
 
     /**

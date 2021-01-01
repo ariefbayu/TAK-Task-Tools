@@ -36,10 +36,10 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['wipId', 'taskId', 'employeeId', 'currentWipId', 'taskDetail', 'notes'], 'required'],
+            [['wipId', 'taskId', 'employeeId', 'currentWipId', 'taskDetail'], 'required'],
             [['wipId', 'taskId', 'employeeId', 'currentWipId'], 'integer'],
             [['createdAt'], 'safe'],
-            [['taskDetail', 'notes'], 'string', 'max' => 256],
+            [['taskDetail', 'note1', 'note2', 'note3'], 'string', 'max' => 256],
             [['wipId'], 'exist', 'skipOnError' => true, 'targetClass' => Workinprogress::className(), 'targetAttribute' => ['wipId' => 'id']],
             [['taskId'], 'exist', 'skipOnError' => true, 'targetClass' => MasterTask::className(), 'targetAttribute' => ['taskId' => 'id']],
             [['employeeId'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['employeeId' => 'id']],
@@ -53,12 +53,14 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'wipId' => 'Wip ID',
-            'taskId' => 'Task ID',
-            'employeeId' => 'Employee ID',
-            'currentWipId' => 'Current Wip ID',
+            'wipId' => 'WIP',
+            'taskId' => 'Task',
+            'employeeId' => 'Employee',
+            'currentWipId' => 'Progress',
             'taskDetail' => 'Task Detail',
-            'notes' => 'Notes',
+            'note1' => 'Note 1',
+            'note2' => 'Note 2',
+            'note3' => 'Note 3',
             'createdAt' => 'Created At',
         ];
     }
@@ -80,7 +82,7 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
      */
     public function getTask()
     {
-        return $this->hasOne(Mastertasks::className(), ['id' => 'taskId']);
+        return $this->hasOne(Mastertask::className(), ['id' => 'taskId']);
     }
 
     /**
@@ -90,7 +92,7 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
      */
     public function getEmployee()
     {
-        return $this->hasOne(Employees::className(), ['id' => 'employeeId']);
+        return $this->hasOne(Employee::className(), ['id' => 'employeeId']);
     }
 
     /**
@@ -100,6 +102,19 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
      */
     public function getCurrentWip()
     {
-        return $this->hasOne(Subtasks::className(), ['id' => 'currentWipId']);
+        return $this->hasOne(Subtask::className(), ['id' => 'currentWipId']);
+    }
+
+    public function loadFromWIP($wip)
+    {
+        $this->wipId         = $wip->id;
+        $this->taskId        = $wip->taskId;
+        $this->employeeId    = $wip->employeeId;
+        $this->currentWipId  = $wip->currentProgressId;
+        $this->taskDetail    = $wip->taskDetail;
+        $this->note1         = $wip->note1;
+        $this->note2         = $wip->note2;
+        $this->note3         = $wip->note3;
+        $this->createdAt     = date('Y-m-d H:i:s');
     }
 }

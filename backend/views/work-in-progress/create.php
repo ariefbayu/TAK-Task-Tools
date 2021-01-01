@@ -5,8 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\WorkInProgress */
 
-$this->title = 'Create Work In Progress';
-$this->params['breadcrumbs'][] = ['label' => 'Work In Progresses', 'url' => ['index']];
+$this->title = 'Create WIP';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="work-in-progress-create">

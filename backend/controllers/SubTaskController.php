@@ -110,6 +110,20 @@ class SubTaskController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionAjaxForWip($id)
+    {
+
+        $subTasks = SubTask::findAll(['taskId' => $id]);
+        if (!empty($subTasks)) {
+            echo "<option>-Please Select Progress-</option>";
+            foreach ($subTasks as $subTask) {
+                echo "<option value='" . $subTask['id'] . "'>" . $subTask['name'] . "</option>";
+            }
+        } else {
+            echo "<option>-</option>";
+        }
+    }
+
     /**
      * Finds the SubTask model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
