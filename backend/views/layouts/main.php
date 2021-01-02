@@ -72,7 +72,7 @@ AppAsset::register($this);
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-        <p class="pull-right">&copy; 2021 - <a href="https://ariefbayu.xyz/">Ariefbayu.XYZ</a></p>
+        <p class="pull-right">&copy; 2021 - <a href="https://ariefbayu.xyz/">ariefbayu.XYZ</a></p>
     </div>
 </footer>
 
