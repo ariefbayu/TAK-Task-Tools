@@ -1,5 +1,6 @@
 <?php
 
+use common\helpers\DateHelper;
 use common\models\General;
 use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
@@ -91,7 +92,13 @@ $provider = new ArrayDataProvider([
 echo GridView::widget([
     'dataProvider' => $provider,
     'columns' => [
-        'createdAt',
+        [
+            'attribute' => 'createdAt',
+            'header' => 'Last Update',
+            'value' => function ($model) {
+                return DateHelper::timeToElapsedString($model->createdAt);
+            }
+        ],
         [
             'attribute' => 'taskId',
             'value' => function ($model) {

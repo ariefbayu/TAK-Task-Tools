@@ -45,10 +45,6 @@ $this->title = 'TAK Task Tools';
                     ],
                     'dataProvider' => $provider,
                     'columns' => [
-                        // ['class' => 'yii\grid\SerialColumn'],
-
-                        // 'id',
-                        // 'taskId',
                         [
                             'attribute' => 'taskId',
                             'value' => function ($model) {
@@ -67,8 +63,6 @@ $this->title = 'TAK Task Tools';
                                 return $model->employee->name;
                             }
                         ],
-                        // 'taskDetail',
-                        // 'updatedAt',
                         [
                             'attribute' => 'updatedAt',
                             'header' => 'Last Update',
@@ -92,8 +86,6 @@ $this->title = 'TAK Task Tools';
                 ]);
             }
             ?>
-
-            <!-- <p><?php echo Html::a('View All &raquo;', ['work-in-progress/index'], ['class' => 'btn btn-default']) ?></p> -->
         </div>
     </div>
 
