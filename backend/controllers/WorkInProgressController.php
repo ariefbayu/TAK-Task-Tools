@@ -53,7 +53,7 @@ class WorkInProgressController extends Controller
      */
     public function actionView($id)
     {
-        $histories = WorkInProgressHistory::find(['wipId' => $id])->orderBy(['createdAt' => SORT_DESC])->all();
+        $histories = WorkInProgressHistory::find()->where(['wipId' => $id])->orderBy(['createdAt' => SORT_DESC])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'histories' => $histories

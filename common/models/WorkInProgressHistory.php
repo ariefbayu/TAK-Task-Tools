@@ -36,7 +36,7 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['wipId', 'taskId', 'employeeId', 'currentWipId', 'taskDetail'], 'required'],
+            [['wipId', 'taskId', 'employeeId', 'currentWipId'], 'required'],
             [['wipId', 'taskId', 'employeeId', 'currentWipId'], 'integer'],
             [['createdAt'], 'safe'],
             [['taskDetail', 'note1', 'note2', 'note3'], 'string', 'max' => 256],
