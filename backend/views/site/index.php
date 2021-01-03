@@ -20,6 +20,11 @@ $this->title = 'TAK Task Tools';
 
             <?php
 
+if(Yii::$app->user->isGuest){
+    echo "Please login to see works in progress.";
+} else {
+
+
             $provider = new ArrayDataProvider([
                 'allModels' => $wip,
                 'pagination' => [
@@ -70,7 +75,9 @@ $this->title = 'TAK Task Tools';
                     ],
 
                 ],
-            ]); ?>
+            ]);
+}
+            ?>
 
             <!-- <p><?php echo Html::a('View All &raquo;', ['work-in-progress/index'], ['class' => 'btn btn-default']) ?></p> -->
         </div>
