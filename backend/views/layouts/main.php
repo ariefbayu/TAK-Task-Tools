@@ -32,7 +32,7 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-light bg-light',
+            'class' => 'navbar-inverse navbar-fixed-to',
         ],
     ]);
     $menuItems = [
