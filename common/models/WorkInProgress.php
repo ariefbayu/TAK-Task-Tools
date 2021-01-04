@@ -42,7 +42,7 @@ class WorkInProgress extends \yii\db\ActiveRecord
         return [
             [['taskId', 'employeeId', 'currentProgressId', 'taskDetail'], 'required'],
             [['taskId', 'employeeId', 'currentProgressId', 'isActive'], 'integer'],
-            [['createdAt', 'updatedAt', 'deadline'], 'safe'],
+            [['createdAt', 'deadline'], 'safe'],
             [['taskDetail', 'note1', 'note2', 'note3'], 'string', 'max' => 256],
             [['taskId'], 'exist', 'skipOnError' => true, 'targetClass' => MasterTask::className(), 'targetAttribute' => ['taskId' => 'id']],
             [['employeeId'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['employeeId' => 'id']],

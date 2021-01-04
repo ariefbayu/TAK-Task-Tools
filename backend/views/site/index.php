@@ -37,6 +37,11 @@ $this->title = 'TAK Task Tools';
                 ]);
 
                 echo GridView::widget([
+                    'rowOptions' => function ($model) {
+                        if ($model->deadline != "" && $model->deadline < date('Y-m-d')) {
+                            return ['class' => 'danger'];
+                        }
+                    },
                     'tableOptions' => [
                         'class' => 'table table-striped',
                     ],
