@@ -44,13 +44,13 @@ use yii\widgets\ActiveForm;
     }
     ?>
 
-    <?= $form->field($model, 'taskDetail')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'taskDetail')->textarea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'note1')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'note1')->textarea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'note2')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'note2')->textarea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'note3')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'note3')->textarea(['maxlength' => true]) ?>
 
     <?php
     echo $form->field($model, 'deadline')->widget(DatePicker::classname(), [
