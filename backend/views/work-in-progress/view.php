@@ -86,60 +86,66 @@ $this->params['breadcrumbs'][] = $model->task->name;
 
     <?php
 
-    $provider = new ArrayDataProvider([
-        'allModels' => $histories,
-        'pagination' => [
-            'pageSize' => 50,
-        ],
-    ]);
+    if (count($histories) > 0) {
 
-    echo GridView::widget([
-        'dataProvider' => $provider,
-        'columns' => [
-            [
-                'attribute' => 'createdAt',
-                'header' => 'Last Update/Deadline',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    $response  = DateHelper::timeToElapsedString($model->createdAt);
-                    $response .= "<br>" . ($model->deadline != "" ? $model->deadline : 'N/A');
-                    return $response;
-                }
+        $provider = new ArrayDataProvider([
+            'allModels' => $histories,
+            'pagination' => [
+                'pageSize' => 50,
             ],
-            [
-                'attribute' => 'taskId',
-                'value' => function ($model) {
-                    return $model->task->name;
-                }
+        ]);
+
+        echo GridView::widget([
+            'dataProvider' => $provider,
+            'columns' => [
+                [
+                    'attribute' => 'createdAt',
+                    'header' => 'Last Update/Deadline',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $response  = DateHelper::timeToElapsedString($model->createdAt);
+                        $response .= "<br>" . ($model->deadline != "" ? $model->deadline : 'N/A');
+                        return $response;
+                    }
+                ],
+                [
+                    'attribute' => 'taskId',
+                    'value' => function ($model) {
+                        return $model->task->name;
+                    }
+                ],
+                [
+                    'attribute' => 'currentWipId',
+                    'value' => function ($model) {
+                        return $model->currentWip->name;
+                    }
+                ],
+                [
+                    'attribute' => 'employeeId',
+                    'value' => function ($model) {
+                        return $model->employee->name;
+                    }
+                ],
+                [
+                    'class' => 'yii\grid\Column',
+                    'header' => Yii::t('app', 'Additional Notes'),
+                    'content' => function ($model) {
+                        $html  = '<strong>Detail</strong><br>';
+                        $html .= \yii\helpers\Html::encode($model->taskDetail) . '<br>';
+                        $html .= '<strong>Note 1</strong><br>';
+                        $html .= \yii\helpers\Html::encode($model->note1) . '<br>';
+                        $html .= '<strong>Note 2</strong><br>';
+                        $html .= \yii\helpers\Html::encode($model->note2) . '<br>';
+                        $html .= '<strong>Note 3</strong><br>';
+                        $html .= \yii\helpers\Html::encode($model->note3);
+                        return $html;
+                    }
+                ],
             ],
-            [
-                'attribute' => 'currentWipId',
-                'value' => function ($model) {
-                    return $model->currentWip->name;
-                }
-            ],
-            [
-                'attribute' => 'employeeId',
-                'value' => function ($model) {
-                    return $model->employee->name;
-                }
-            ],
-            [
-                'class' => 'yii\grid\Column',
-                'header' => Yii::t('app', 'Additional Notes'),
-                'content' => function ($model) {
-                    $html  = '<strong>Detail</strong><br>';
-                    $html .= \yii\helpers\Html::encode($model->taskDetail) . '<br>';
-                    $html .= '<strong>Note 1</strong><br>';
-                    $html .= \yii\helpers\Html::encode($model->note1) . '<br>';
-                    $html .= '<strong>Note 2</strong><br>';
-                    $html .= \yii\helpers\Html::encode($model->note2) . '<br>';
-                    $html .= '<strong>Note 3</strong><br>';
-                    $html .= \yii\helpers\Html::encode($model->note3);
-                    return $html;
-                }
-            ],
-        ],
-    ]); ?>
+        ]);
+    } else {
+        echo "<p>This task has no history recorded.</p>";
+    }
+    ?>
 
 </div>
