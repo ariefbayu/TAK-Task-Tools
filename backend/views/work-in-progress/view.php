@@ -20,9 +20,8 @@ $this->params['breadcrumbs'][] = $model->task->name;
 
     <p>
         <?= (Yii::$app->user->isGuest) ? '' : Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php 
-        if($model->isActive == '1')
-        {
+        <?php
+        if ($model->isActive == '1') {
             echo (Yii::$app->user->isGuest) ? '' : Html::a('Mark As Completed', ['mark-as-completed', 'id' => $model->id], [
                 'class' => 'btn btn-success',
                 'data' => [
@@ -31,8 +30,7 @@ $this->params['breadcrumbs'][] = $model->task->name;
                 ],
             ]);
         }
-        if($model->isActive == '0')
-        {
+        if ($model->isActive == '0') {
             echo (Yii::$app->user->isGuest) ? '' : Html::a('Reactivate Task', ['mark-as-active', 'id' => $model->id], [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -70,6 +68,12 @@ $this->params['breadcrumbs'][] = $model->task->name;
             'note2',
             'note3',
             [
+                'attribute' => 'deadline',
+                'value' => function ($model) {
+                    return ($model->deadline != '' ? $model->deadline : 'N/A');
+                }
+            ],
+            [
                 'attribute' => 'isActive',
                 'value' => function ($model) {
                     return General::$isActiveLabel[$model->isActive];
@@ -78,61 +82,64 @@ $this->params['breadcrumbs'][] = $model->task->name;
         ],
     ]) ?>
 
-<h2>Task Histories</h2>
+    <h2>Task Histories</h2>
 
-<?php
+    <?php
 
-$provider = new ArrayDataProvider([
-    'allModels' => $histories,
-    'pagination' => [
-        'pageSize' => 50,
-    ],
-]);
+    $provider = new ArrayDataProvider([
+        'allModels' => $histories,
+        'pagination' => [
+            'pageSize' => 50,
+        ],
+    ]);
 
-echo GridView::widget([
-    'dataProvider' => $provider,
-    'columns' => [
-        [
-            'attribute' => 'createdAt',
-            'header' => 'Last Update',
-            'value' => function ($model) {
-                return DateHelper::timeToElapsedString($model->createdAt);
-            }
+    echo GridView::widget([
+        'dataProvider' => $provider,
+        'columns' => [
+            [
+                'attribute' => 'createdAt',
+                'header' => 'Last Update/Deadline',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $response  = DateHelper::timeToElapsedString($model->createdAt);
+                    $response .= "<br>" . ($model->deadline != "" ? $model->deadline : 'N/A');
+                    return $response;
+                }
+            ],
+            [
+                'attribute' => 'taskId',
+                'value' => function ($model) {
+                    return $model->task->name;
+                }
+            ],
+            [
+                'attribute' => 'currentWipId',
+                'value' => function ($model) {
+                    return $model->currentWip->name;
+                }
+            ],
+            [
+                'attribute' => 'employeeId',
+                'value' => function ($model) {
+                    return $model->employee->name;
+                }
+            ],
+            [
+                'class' => 'yii\grid\Column',
+                'header' => Yii::t('app', 'Additional Notes'),
+                'content' => function ($model) {
+                    $html  = '<strong>Detail</strong><br>';
+                    $html .= \yii\helpers\Html::encode($model->taskDetail) . '<br>';
+                    $html .= '<strong>Note 1</strong><br>';
+                    $html .= \yii\helpers\Html::encode($model->note1) . '<br>';
+                    $html .= '<strong>Note 2</strong><br>';
+                    $html .= \yii\helpers\Html::encode($model->note2) . '<br>';
+                    $html .= '<strong>Note 3</strong><br>';
+                    $html .= \yii\helpers\Html::encode($model->note3);
+                    return $html;
+                }
+            ],
         ],
-        [
-            'attribute' => 'taskId',
-            'value' => function ($model) {
-                return $model->task->name;
-            }
-        ],
-        [
-            'attribute' => 'currentWipId',
-            'value' => function ($model) {
-                return $model->currentWip->name;
-            }
-        ],
-        [
-            'attribute' => 'employeeId',
-            'value' => function ($model) {
-                return $model->employee->name;
-            }
-        ],
-        [
-            'class' => 'yii\grid\Column',
-            'header' => Yii::t('app', 'Additional Notes'),
-            'content' => function ($model) {
-                $html  = '<strong>Detail</strong><br>';
-                $html .= \yii\helpers\Html::encode($model->taskDetail) . '<br>';
-                $html .= '<strong>Note 1</strong><br>';
-                $html .= \yii\helpers\Html::encode($model->note1) . '<br>';
-                $html .= '<strong>Note 2</strong><br>';
-                $html .= \yii\helpers\Html::encode($model->note2) . '<br>';
-                $html .= '<strong>Note 3</strong><br>';
-                $html .= \yii\helpers\Html::encode($model->note3);
-              return $html;
-            }
-          ],
-    ],
-]); ?>
+    ]); ?>
 
 </div>

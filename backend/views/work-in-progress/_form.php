@@ -5,6 +5,7 @@ use common\models\MasterTask;
 use common\models\SubTask;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -50,6 +51,13 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'note2')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'note3')->textInput(['maxlength' => true]) ?>
+
+    <?php
+    echo $form->field($model, 'deadline')->widget(DatePicker::classname(), [
+        //'language' => 'ru',
+        'dateFormat' => 'yyyy-MM-dd',
+    ])
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

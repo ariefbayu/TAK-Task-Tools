@@ -65,12 +65,14 @@ $this->title = 'TAK Task Tools';
                         ],
                         [
                             'attribute' => 'updatedAt',
-                            'header' => 'Last Update',
+                            'header' => 'Update/Deadline',
+                            'format' => 'raw',
                             'value' => function ($model) {
-                                return DateHelper::timeToElapsedString($model->updatedAt);
+                                $response  = DateHelper::timeToElapsedString($model->updatedAt);
+                                $response .= "<br>" . ($model->deadline != "" ? $model->deadline : 'N/A');
+                                return $response;
                             }
                         ],
-
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{detail}',

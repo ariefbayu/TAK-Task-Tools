@@ -38,7 +38,7 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
         return [
             [['wipId', 'taskId', 'employeeId', 'currentWipId'], 'required'],
             [['wipId', 'taskId', 'employeeId', 'currentWipId'], 'integer'],
-            [['createdAt'], 'safe'],
+            [['createdAt', 'deadline'], 'safe'],
             [['taskDetail', 'note1', 'note2', 'note3'], 'string', 'max' => 256],
             [['wipId'], 'exist', 'skipOnError' => true, 'targetClass' => Workinprogress::className(), 'targetAttribute' => ['wipId' => 'id']],
             [['taskId'], 'exist', 'skipOnError' => true, 'targetClass' => MasterTask::className(), 'targetAttribute' => ['taskId' => 'id']],
@@ -61,6 +61,7 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
             'note1' => 'Note 1',
             'note2' => 'Note 2',
             'note3' => 'Note 3',
+            'deadline' => 'Deadline',
             'createdAt' => 'Created At',
         ];
     }
@@ -115,6 +116,8 @@ class WorkInProgressHistory extends \yii\db\ActiveRecord
         $this->note1         = $wip->note1;
         $this->note2         = $wip->note2;
         $this->note3         = $wip->note3;
+        $this->deadline      = $wip->deadline;
+        
         $this->createdAt     = date('Y-m-d H:i:s');
     }
 }
